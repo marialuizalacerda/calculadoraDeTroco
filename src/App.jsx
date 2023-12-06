@@ -2,23 +2,28 @@ import React, { useState } from 'react';
 import '/src/style.css';
 
 const ChangeCalculator = () => {
+  // State hooks para armazenar valores da compra, dinheiro entregue, troco e notas do troco
   const [purchaseValue, setPurchaseValue] = useState('')
   const [moneyGiven, setMoneyGiven] = useState('')
   const [change, setChange] = useState(0)
   const [changeNotes, setChangeNotes] = useState({})
 
+  // Função para calcular o troco com base nos valores da compra e dinheiro entregue
   const handleCalculateChange = () => {
     const purchase = parseFloat(purchaseValue)
     const given = parseFloat(moneyGiven)
 
+     // Verifica se os valores inseridos são válidos
     if (isNaN(purchase) || isNaN(given) || purchase <= 0 || given < purchase) {
       alert('Por favor, insira valores válidos.')
       return;
     }
 
+    // Inicializa o total do troco e um objeto para contar as notas
     let totalChange = given - purchase;
     const notes = { 100: 0, 10: 0, 1: 0 };
 
+    // Calcula as notas do troco usando um loop
     while (totalChange > 0) {
       if (totalChange >= 100) {
         notes[100]++
@@ -32,6 +37,7 @@ const ChangeCalculator = () => {
       }
     }
 
+    // Atualiza os estados com os resultados
     setChange(given - purchase);
     setChangeNotes(notes)
   }
